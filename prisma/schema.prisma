@@ -2,16 +2,50 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+  id           String         @id @unique @default(uuid())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  messages     Message[]
+  Organization Organization[]
+  Member       Member?
+}
+
+model Channel {
+  id      String    @id @default(uuid())
+  name    String
+  public  Boolean
+  Message Message[]
+}
+
+model Message {
+  id        String  @id @default(uuid())
+  text      String
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  String
+  channel   Channel @relation(fields: [channelId], references: [id])
+  channelId String
+}
+
+model Organization {
+  id      String   @id @default(uuid())
+  name    String
+  owner   User     @relation(fields: [ownerId], references: [id])
+  ownerId String
+  Member  Member[]
+}
+
+model Member {
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String       @unique
 }

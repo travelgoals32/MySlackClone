@@ -1,14 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import {ClockIcon, QuestionMarkCircleIcon} from "@heroicons/react/24/outline";
-import {UserIcon} from "@heroicons/react/24/solid";
-
-
+import {GlobeAltIcon} from "@heroicons/react/24/outline";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
     <>
@@ -16,31 +12,21 @@ const Home: NextPage = () => {
         <title>Slack</title>
         
       </Head>
-      <div className="grid grid-rows-[40px_1fr] h-full">
-        <div className="grid grid-cols-[3fr_10fr] bg-indigo-600">
-          <div className="flex justify-end items-center">
-            <ClockIcon className="h-6 w-6 text-white mr-5"/>
-          </div>
-          <div className="grid grid-cols-[7fr_3fr]">
-            <div className="flex items-center">
-              <input type="text" className="rounded w-5/6 opacity-75"/>
-            </div>
-            <div className="flex justify-end items-center">
-              <div className="mr-5">
-                <QuestionMarkCircleIcon className="text-white h-6 w-6"/>
-              </div>
-              <div className="mr-3">
-                <UserIcon className="text-white h-6 w-6"/>
-              </div>
-            </div>
+     <div className="grid grid-rows-[3fr_5fr]">
+        <div className="flex justify-center items-center">
+          <GlobeAltIcon className="h-60 w-60 text-rose-500"/>
+          <div className="text-7xl font-bold text-rose-500">Thwack</div>
+        </div>
+        <div className="grid grid-rows-2">
+          <div className="flex justify-center text-5xl ">Welcome to Thwack!</div>
+          <div className="flex justify-center">
+          <button className="border h-10 w-20 mr-10 rounded hover:bg-neutral-300">
+            <Link href="/login">Log In</Link>
+          </button>
+          <button className="border h-10 w-20 ml-10 rounded hover:bg-neutral-300">Sign Up</button>
           </div>
         </div>
-        <div className="grid grid-cols-[3fr_10fr] bg-rose-600">
-          <div className="bg-stone-400">
-          </div>
-          <div className=""></div>
-        </div>
-      </div>
+     </div>
     </>
   );
 };
